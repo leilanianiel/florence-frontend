@@ -46,21 +46,18 @@
   height: 60px; /* Full width */
 }
 
-.navbar li{
+.navbar li {
   float: left;
   display: block;
   color: #f2f2f2;
   text-align: space-between;
-  padding: 1px 15px;
+  padding: 1px 10px 20px;
+  margin-bottom: 10px;
   text-decoration: none;
 }
 
 /* Change background on mouse-over */
 .navbar :hover {
-  background:rgb(228, 242, 255);
+  background: rgb(228, 242, 255);
   color: rgb(157, 224, 33);
 }
-
-body{
-  padding-top: 60px;
-} 

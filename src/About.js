@@ -1,12 +1,12 @@
 import React from "react";
 import "./About.css";
-import image from './Images/Florence Image.png'
+import image from './Images/About Florence.png'
 
 function About() {
   return (
     <div className="About">
-      <img
-        className="pictures rounded profile-pic"
+      <img 
+        className="about florence"
         src={image}
         alt="Florence the invetory of the electic fridge."
       />
