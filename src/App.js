@@ -9,8 +9,8 @@ import MyFridge from "./MyFridge";
 function App() {
   return (
     <Router>
-      <div className="App">
-        <nav>
+      <div className="App container">
+        <nav className="navbar navbar-default navbar-fixed-top">
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -23,7 +23,7 @@ function App() {
             </li>
             <li>
               <Link to="/LogIn">Log In</Link>
-            </li>
+            </li> 
           </ul>
         </nav>
 
@@ -41,7 +41,8 @@ function App() {
             <Home />
           </Route>
         </Switch>
-      </div>
+        </div>
+     
     </Router>
   );
 }
