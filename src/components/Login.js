@@ -20,7 +20,6 @@ function Login() {
         <div>
             <GoogleLogin
                 clientId={clientId}
-                // cliendId=""
                 buttonText="Login"
                 onSuccess={onSuccess}
                 onFailure={onFailure}
