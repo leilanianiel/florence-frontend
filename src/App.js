@@ -1,8 +1,8 @@
 import { AppBar, Box, Tab, Tabs, Typography } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
-import KitchenIcon from '@material-ui/icons/Kitchen';
-import ContactSupportIcon from '@material-ui/icons/ContactSupport';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import KitchenIcon from "@material-ui/icons/Kitchen";
+import ContactSupportIcon from "@material-ui/icons/ContactSupport";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import React from "react";
 import About from "./About";
 import "./App.css";
@@ -10,7 +10,6 @@ import Home from "./Home";
 import LogIn from "./LogIn";
 import MyFridge from "./MyFridge";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
-import purple from "@material-ui/core/colors/purple";
 
 const theme = createTheme({
   palette: {
