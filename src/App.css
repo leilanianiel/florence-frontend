@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+.navbar {
+  overflow: hidden;
+  background-color: rgb(228, 242, 255);
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  height: 60px; /* Full width */
+}
+
+.navbar li {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: space-between;
+  padding: 1px 10px 20px;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+
+/* Change background on mouse-over */
+.navbar :hover {
+  background: rgb(228, 242, 255);
+  color: rgb(157, 224, 33);
+}
