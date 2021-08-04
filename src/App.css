@@ -43,7 +43,7 @@
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
   width: 100%; /* Full width */
-  height: 70px; /* Full width */
+  height: 60px; /* Full width */
 }
 
 .navbar li{
@@ -51,7 +51,7 @@
   display: block;
   color: #f2f2f2;
   text-align: space-between;
-  padding: 10px 15px;
+  padding: 1px 15px;
   text-decoration: none;
 }
 
