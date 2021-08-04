@@ -57,8 +57,8 @@ function MyFridge() {
           return (
             <>
               id: {item.id}
-              fridge: {item.fridge_id}
-              product: {item.product_id}
+              fridge_id: {item.fridge_id}
+              product_id: {item.product_id}
               count: {item.count}
               product name: {product.name}
               <img src={product.image} alt={product.name} />
