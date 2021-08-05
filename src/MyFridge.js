@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./MyFridge.css";
-const api = process.env.REACT_APP_API_ENDPOINT;
+const api = process.env.REACT_APP_API_ENDPOINT || window.location.hostname;
 
 const customer_id = 1; // TODO: do this properly
 
