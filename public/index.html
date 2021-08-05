@@ -48,9 +48,8 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script>
-      {% if user %}
-      {{ user|tojson }}
-      window.userid = user.id
+      {% if user_id %}
+      window.userId = {{user_id}}
       {% endif %}
     </script>
   </body>
