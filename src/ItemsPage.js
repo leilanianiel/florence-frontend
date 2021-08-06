@@ -1,13 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./ItemsPage.css";
-import Button from "@material-ui/core/Button";
 import ExposureNeg1Icon from "@material-ui/icons/ExposureNeg1";
 import { makeStyles } from "@material-ui/core/styles";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItem from "@material-ui/core/ListItem";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -16,12 +11,10 @@ import CloseIcon from "@material-ui/icons/Close";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import AddIcon from "@material-ui/icons/Add";
 
 import Typography from "@material-ui/core/Typography";
 import { CardMedia, Fab } from "@material-ui/core";
 const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
-const customer_id = process.env.REACT_APP_TEST_USER || window.userId;
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
