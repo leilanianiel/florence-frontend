@@ -4,7 +4,7 @@ import "./MyFridge.css";
 import Button from "@material-ui/core/Button";
 
 const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
-const customer_id = 4; // TODO: do this properly
+const customer_id = window.userId;
 
 function MyFridge() {
   const [items, setItems] = useState([]);
