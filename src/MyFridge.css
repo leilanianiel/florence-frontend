@@ -1,4 +1,4 @@
-div.grid {
+.MyFridge.grid {
     width: 600px;
     height: 600px;
     margin: 0 auto;
@@ -9,3 +9,22 @@ div.grid {
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 }
+.MyFridge{
+    display: flex;
+    flex-direction: row;
+    
+    
+}
+
+.btn{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    justify-content: space-evenly;
+    align-items: flex-start;
+
+}
+.product-image{
+    width: 200px;
+    height: 200px;
+}   

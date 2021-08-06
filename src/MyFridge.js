@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./MyFridge.css";
-const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
+import Button from "@material-ui/core/Button";
 
-const customer_id = 1; // TODO: do this properly
+const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
+const customer_id = window.userId;
 
 function MyFridge() {
   const [items, setItems] = useState([]);
@@ -50,21 +51,27 @@ function MyFridge() {
         </div>
       )}
       <div>
-        items:
         {items.map((item) => {
           let product = products.find((p) => p.id === item.product_id);
+          console.log(product);
 
           return (
             <>
-              id: {item.id}
-              fridge_id: {item.fridge_id}
-              product_id: {item.product_id}
-              count: {item.count}
-              product name: {product.name}
-              <img src={product.image} alt={product.name} />
+              <img className="product-image" src={product.image} alt={product.name} />
             </>
           );
         })}
+      </div>
+      <div>
+        <Button className="btn" variant="contained" color="primary">
+          Expiring Soon
+        </Button>
+        <Button className="btn" variant="contained" color="primary">
+          Dairy
+        </Button>
+        <Button className="btn" variant="contained" color="primary">
+          Primary
+        </Button>
       </div>
     </div>
   );
