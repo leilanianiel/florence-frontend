@@ -64,10 +64,10 @@ function MyFridge() {
       </div>
       <div>
         <Button className="btn" variant="contained" color="primary">
-          Primary
+          Expiring Soon
         </Button>
         <Button className="btn" variant="contained" color="primary">
-          Primary
+          Dairy
         </Button>
         <Button className="btn" variant="contained" color="primary">
           Primary
