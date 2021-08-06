@@ -8,7 +8,7 @@ function Home() {
       <img
         className="about florence"
         src={image}
-        alt="Florence the invetory of the electic fridge."
+        alt="Florence the invetory of the electric fridge."
       />
     </div>
   );
