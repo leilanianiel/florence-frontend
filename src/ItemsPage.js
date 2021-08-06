@@ -31,6 +31,13 @@ export default function ItemsPage(props) {
 
   const [items, setItems] = useState([]);
   const [products, setProducts] = useState([]);
+  const handleClickOpen = async (itemId) => {
+    const deceaseResponse = await axios.post(
+      `${api}/item/${itemId}/decrease_count`
+    );
+    console.log(deceaseResponse);
+    getItems();
+  };
 
   useEffect(() => {
     async function getData() {
@@ -40,21 +47,19 @@ export default function ItemsPage(props) {
 
     getData();
   }, []);
-
+  async function getItems() {
+    const itemsInFridgeResponse = await axios.get(
+      `${api}/fridge/${props.fridgeId}/items`
+    );
+    setItems(
+      itemsInFridgeResponse.data.filter(
+        (item) => item.product_id === props.selectedProduct
+      )
+    );
+  }
   useEffect(() => {
-    async function getData() {
-      const itemsInFridgeResponse = await axios.get(
-        `${api}/fridge/${props.fridgeId}/items`
-      );
-      setItems(
-        itemsInFridgeResponse.data.filter(
-          (item) => item.product_id === props.selectedProduct
-        )
-      );
-    }
-
-    getData();
-  }, [products]);
+    getItems();
+  }, [products, props.fridgeId, props.selectedProduct]);
 
   return (
     <div>
@@ -95,7 +100,14 @@ export default function ItemsPage(props) {
                 />
               </CardContent>
               <CardActions>
-                <Fab color="primary" aria-label="add" size="small">
+                <Fab
+                  onClick={() => {
+                    handleClickOpen(item.id);
+                  }}
+                  color="primary"
+                  aria-label="add"
+                  size="small"
+                >
                   <ExposureNeg1Icon />
                 </Fab>
               </CardActions>
