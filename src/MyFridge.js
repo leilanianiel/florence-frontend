@@ -3,8 +3,15 @@ import React, { useEffect, useState } from "react";
 import "./MyFridge.css";
 import Button from "@material-ui/core/Button";
 
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import AddIcon from "@material-ui/icons/Add";
+
+import Typography from "@material-ui/core/Typography";
+import { CardMedia, Fab } from "@material-ui/core";
 const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
-const customer_id = window.userId;
+const customer_id = process.env.REACT_APP_TEST_USER || window.userId;
 
 function MyFridge() {
   const [items, setItems] = useState([]);
@@ -42,27 +49,7 @@ function MyFridge() {
 
   return (
     <div className="MyFridge">
-      {customer && (
-        <div>
-          id: {customer.id}
-          user_name: {customer.user_name}
-          fridge: {customer.fridge_id}
-          <img src={customer.picture} alt={customer.user_name} />
-        </div>
-      )}
-      <div>
-        {items.map((item) => {
-          let product = products.find((p) => p.id === item.product_id);
-          console.log(product);
-
-          return (
-            <>
-              <img className="product-image" src={product.image} alt={product.name} />
-            </>
-          );
-        })}
-      </div>
-      <div>
+      <div className="btnParent">
         <Button className="btn" variant="contained" color="primary">
           Expiring Soon
         </Button>
@@ -70,8 +57,39 @@ function MyFridge() {
           Dairy
         </Button>
         <Button className="btn" variant="contained" color="primary">
-          Primary
+          Meat
         </Button>
+      </div>
+
+      <div className="itemParent">
+        {items.map((item) => {
+          let product = products.find((p) => p.id === item.product_id);
+          console.log(product);
+
+          return (
+            <Card className="item">
+              <CardContent>
+                <Typography color="textSecondary" gutterBottom>
+                  {product.name}
+                </Typography>
+
+                <CardMedia
+                  className="product-image"
+                  image={product.image}
+                  title={product.name}
+                />
+              </CardContent>
+              <CardActions>
+                <Button size="small">show item</Button>
+              </CardActions>
+            </Card>
+          );
+        })}
+      </div>
+      <div className="addItem">
+        <Fab color="primary" aria-label="add">
+          <AddIcon />
+        </Fab>
       </div>
     </div>
   );

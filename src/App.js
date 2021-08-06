@@ -1,15 +1,19 @@
-import { AppBar, Box, Tab, Tabs, Typography } from "@material-ui/core";
+import { AppBar, Avatar, Box, Tab, Tabs, Typography } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import KitchenIcon from "@material-ui/icons/Kitchen";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import About from "./About";
 import "./App.css";
 import Home from "./Home";
 import LogIn from "./LogIn";
 import MyFridge from "./MyFridge";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import axios from "axios";
+
+const customer_id = process.env.REACT_APP_TEST_USER || window.userId;
+const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
 
 const theme = createTheme({
   palette: {
@@ -44,7 +48,21 @@ function TabPanel(props) {
 
 function App() {
   const [value, setValue] = React.useState(0);
+  const [customer, setCustomer] = useState();
 
+  useEffect(() => {
+    if (!customer_id) {
+      return;
+    }
+    async function getData() {
+      const customerResponse = await axios.get(
+        `${api}/customer/${customer_id}`
+      );
+      setCustomer(customerResponse.data);
+    }
+
+    getData();
+  }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -52,7 +70,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App container">
-        <AppBar position="static" color="default">
+        <AppBar position="sticky" color="default">
           <Tabs
             value={value}
             onChange={handleChange}
@@ -67,6 +85,9 @@ function App() {
             <Tab label="About" icon={<ContactSupportIcon />} />
             <Tab label="Log In" icon={<ExitToAppIcon />} />
           </Tabs>
+            {customer && (
+              <Avatar className="avatar" alt={customer.user_name} src={customer.picture} />
+            )}
         </AppBar>
         <TabPanel value={value} index={0}>
           <Home />
