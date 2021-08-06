@@ -1,7 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./MyFridge.css";
+import "./ItemsPage.css";
 import Button from "@material-ui/core/Button";
+import ExposureNeg1Icon from "@material-ui/icons/ExposureNeg1";
+import { makeStyles } from "@material-ui/core/styles";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItem from "@material-ui/core/ListItem";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -13,18 +23,24 @@ import { CardMedia, Fab } from "@material-ui/core";
 const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
 const customer_id = process.env.REACT_APP_TEST_USER || window.userId;
 
-function MyFridge() {
-  const [uniqueItems, setUniqueItems] = useState([]);
-  const [customer, setCustomer] = useState();
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    position: "relative",
+  },
+  title: {
+    marginLeft: theme.spacing(2),
+    flex: 1,
+  },
+}));
+
+export default function ItemsPage(props) {
+  const classes = useStyles();
+
+  const [items, setItems] = useState([]);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     async function getData() {
-      const customerResponse = await axios.get(
-        `${api}/customer/${customer_id}`
-      );
-      setCustomer(customerResponse.data);
-
       const productResponse = await axios.get(`${api}/product`);
       setProducts(productResponse.data);
     }
@@ -33,50 +49,40 @@ function MyFridge() {
   }, []);
 
   useEffect(() => {
-    if (!customer) {
-      return;
-    }
-
     async function getData() {
       const itemsInFridgeResponse = await axios.get(
-        `${api}/fridge/${customer.fridge_id}/items`
+        `${api}/fridge/${props.fridgeId}/items`
       );
-      const uniqueProducts = {};
-      itemsInFridgeResponse.data.map((item) => {
-        if (uniqueProducts[item.product_id]) {
-          uniqueProducts[item.product_id].quantity += item.count;
-        } else {
-          uniqueProducts[item.product_id] = {
-            quantity: item.count,
-            item,
-          };
-        }
-        return item;
-      });
-
-      setUniqueItems(Object.values(uniqueProducts));
+      setItems(
+        itemsInFridgeResponse.data.filter(
+          (item) => item.product_id === props.selectedProduct
+        )
+      );
     }
 
     getData();
-  }, [customer]);
+  }, [products]);
 
   return (
-    <div className="MyFridge">
-      <div className="btnParent">
-        <Button className="btn" variant="contained" color="primary">
-          Expiring Soon
-        </Button>
-        <Button className="btn" variant="contained" color="primary">
-          Dairy
-        </Button>
-        <Button className="btn" variant="contained" color="primary">
-          Meat
-        </Button>
-      </div>
-
-      <div className="itemParent">
-        {uniqueItems.map((uniqueItem) => {
-          let product = products.find((p) => p.id === uniqueItem.item.product_id);
+    <div>
+      <AppBar className={classes.appBar} color="secondary">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            color="inherit"
+            onClick={props.handleClose}
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            Items
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <div className="itemContainer">
+        {items.map((item) => {
+          let product = products.find((p) => p.id === item.product_id);
           console.log(product);
 
           return (
@@ -86,7 +92,7 @@ function MyFridge() {
                   {product.name}
                 </Typography>
                 <Typography color="textSecondary" gutterBottom>
-                  {uniqueItem.quantity}
+                  {item.count}
                 </Typography>
 
                 <CardMedia
@@ -96,19 +102,14 @@ function MyFridge() {
                 />
               </CardContent>
               <CardActions>
-                <Button size="small">show item</Button>
+                <Fab color="primary" aria-label="add" size="small">
+                  <ExposureNeg1Icon />
+                </Fab>
               </CardActions>
             </Card>
           );
         })}
       </div>
-      <div className="addItem">
-        <Fab color="primary" aria-label="add">
-          <AddIcon />
-        </Fab>
-      </div>
     </div>
   );
 }
-
-export default MyFridge;

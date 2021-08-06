@@ -1,0 +1,10 @@
+
+.itemContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.product-image {
+  width: 200px;
+  height: 200px;
+}

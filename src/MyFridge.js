@@ -10,14 +10,32 @@ import AddIcon from "@material-ui/icons/Add";
 
 import Typography from "@material-ui/core/Typography";
 import { CardMedia, Fab } from "@material-ui/core";
+import Slide from "@material-ui/core/Slide";
+import Dialog from "@material-ui/core/Dialog";
+import ItemsPage from "./ItemsPage";
 const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
 const customer_id = process.env.REACT_APP_TEST_USER || window.userId;
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function MyFridge() {
   const [uniqueItems, setUniqueItems] = useState([]);
   const [customer, setCustomer] = useState();
+  const [selectedProduct, setSelectedProduct] = useState();
   const [products, setProducts] = useState([]);
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedProduct();
+  };
   useEffect(() => {
     async function getData() {
       const customerResponse = await axios.get(
@@ -76,7 +94,9 @@ function MyFridge() {
 
       <div className="itemParent">
         {uniqueItems.map((uniqueItem) => {
-          let product = products.find((p) => p.id === uniqueItem.item.product_id);
+          let product = products.find(
+            (p) => p.id === uniqueItem.item.product_id
+          );
           console.log(product);
 
           return (
@@ -96,17 +116,39 @@ function MyFridge() {
                 />
               </CardContent>
               <CardActions>
-                <Button size="small">show item</Button>
+                <Button
+                  size="small"
+                  onClick={() => {
+                    handleClickOpen();
+                    setSelectedProduct(product.id);
+                  }}
+                >
+                  show item
+                </Button>
               </CardActions>
             </Card>
           );
         })}
       </div>
       <div className="addItem">
-        <Fab color="primary" aria-label="add">
+        <Fab color="primary" aria-label="add" >
           <AddIcon />
         </Fab>
       </div>
+      {customer && (
+        <Dialog
+          fullScreen
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Transition}
+        >
+          <ItemsPage
+            handleClose={handleClose}
+            fridgeId={customer.fridge_id}
+            selectedProduct={selectedProduct}
+          />
+        </Dialog>
+      )}
     </div>
   );
 }
