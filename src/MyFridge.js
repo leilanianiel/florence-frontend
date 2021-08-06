@@ -51,7 +51,7 @@ function MyFridge() {
   }, []);
 
   useEffect(() => {
-    if (!customer) {
+    if (!customer || products.length === 0) {
       return;
     }
 
@@ -76,7 +76,7 @@ function MyFridge() {
     }
 
     getData();
-  }, [customer]);
+  }, [customer, products]);
 
   return (
     <div className="MyFridge">
@@ -97,7 +97,9 @@ function MyFridge() {
           let product = products.find(
             (p) => p.id === uniqueItem.item.product_id
           );
-          console.log(product);
+          if (!product) {
+            return <></>;
+          }
 
           return (
             <Card className="item">
@@ -131,7 +133,7 @@ function MyFridge() {
         })}
       </div>
       <div className="addItem">
-        <Fab color="primary" aria-label="add" >
+        <Fab color="primary" aria-label="add">
           <AddIcon />
         </Fab>
       </div>
