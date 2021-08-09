@@ -1,5 +1,4 @@
 import axios from "axios";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import "./ItemsPage.css";
 import ExposureNeg1Icon from "@material-ui/icons/ExposureNeg1";
@@ -8,6 +7,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -32,13 +33,24 @@ export default function ItemsPage(props) {
 
   const [items, setItems] = useState([]);
   const [products, setProducts] = useState([]);
+
   const handleClickOpen = async (itemId) => {
-    const deceaseResponse = await axios.post(
+  const deceaseResponse = await axios.post(
       `${api}/item/${itemId}/decrease_count`
     );
     console.log(deceaseResponse);
     getItems();
   };
+
+  const handleClickDelete = async (itemId) => {
+    const deleteResponse = await axios.delete(
+        `${api}/item/${itemId}`
+      );
+      console.log(deleteResponse);
+      getItems();
+    };
+
+
 
   useEffect(() => {
     async function getData() {
@@ -83,8 +95,6 @@ export default function ItemsPage(props) {
         {items.map((item) => {
           let product = products.find((p) => p.id === item.product_id);
           console.log(product);
-          console.log(item);
-          let expiryDate = moment(item.expiration);
 
           return (
             <Card className="item">
@@ -93,10 +103,7 @@ export default function ItemsPage(props) {
                   {product.name}
                 </Typography>
                 <Typography color="textSecondary" gutterBottom>
-                  Count: {item.count}
-                </Typography>
-                <Typography color="textSecondary" gutterBottom>
-                  Expires {expiryDate.fromNow()}
+                  {item.count}
                 </Typography>
 
                 <CardMedia
@@ -109,13 +116,24 @@ export default function ItemsPage(props) {
                 <Fab
                   onClick={() => {
                     handleClickOpen(item.id);
-                  }}                     
+                  }}
                   color="primary"
                   aria-label="add"
                   size="small"
                 >
                   <ExposureNeg1Icon />
                 </Fab>
+                <Fab
+                  onClick={() => {
+                    handleClickDelete(item.id);
+                  }}
+                  color="primary"
+                  aria-label="add"
+                  size="small"
+                >
+                  <DeleteForeverIcon />
+                </Fab>
+
               </CardActions>
             </Card>
           );

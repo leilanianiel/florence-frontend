@@ -90,6 +90,15 @@ function MyFridge() {
         <Button className="btn" variant="contained" color="primary">
           Meat
         </Button>
+        <Button className="btn" variant="contained" color="primary">
+          Fruit
+        </Button>
+        <Button className="btn" variant="contained" color="primary">
+          Veggies
+        </Button>
+        <Button className="btn" variant="contained" color="primary">
+          Drinks
+        </Button>
       </div>
 
       <div className="itemParent">
