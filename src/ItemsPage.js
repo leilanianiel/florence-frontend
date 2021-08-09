@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import "./ItemsPage.css";
 import ExposureNeg1Icon from "@material-ui/icons/ExposureNeg1";
@@ -82,6 +83,8 @@ export default function ItemsPage(props) {
         {items.map((item) => {
           let product = products.find((p) => p.id === item.product_id);
           console.log(product);
+          console.log(item);
+          let expiryDate = moment(item.expiration);
 
           return (
             <Card className="item">
@@ -90,7 +93,10 @@ export default function ItemsPage(props) {
                   {product.name}
                 </Typography>
                 <Typography color="textSecondary" gutterBottom>
-                  {item.count}
+                  Count: {item.count}
+                </Typography>
+                <Typography color="textSecondary" gutterBottom>
+                  Expires {expiryDate.fromNow()}
                 </Typography>
 
                 <CardMedia
@@ -103,7 +109,7 @@ export default function ItemsPage(props) {
                 <Fab
                   onClick={() => {
                     handleClickOpen(item.id);
-                  }}
+                  }}                     
                   color="primary"
                   aria-label="add"
                   size="small"
