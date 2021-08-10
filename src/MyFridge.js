@@ -25,7 +25,8 @@ function MyFridge() {
   const [customer, setCustomer] = useState();
   const [selectedProduct, setSelectedProduct] = useState();
   const [products, setProducts] = useState([]);
-
+  const [visibleUniqueItems, setVisibleUniqueItems] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(undefined);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -36,6 +37,27 @@ function MyFridge() {
     setOpen(false);
     setSelectedProduct();
   };
+
+  useEffect(() => {
+    if (selectedCategory === undefined || uniqueItems.count === 0) {
+      return;
+    }
+    const newList = uniqueItems.filter((uniqueItem) => {
+      let product = products.find(
+        (product) => product.id === uniqueItem.item.product_id
+      );
+      if (selectedCategory === -1) {
+        return true;
+      }
+      if (!product) {
+        return false;
+      }
+      return product.category_id === selectedCategory;
+    });
+
+    setVisibleUniqueItems(newList);
+  }, [products, selectedCategory, uniqueItems]);
+
   useEffect(() => {
     async function getData() {
       const customerResponse = await axios.get(
@@ -73,6 +95,7 @@ function MyFridge() {
       });
 
       setUniqueItems(Object.values(uniqueProducts));
+      setVisibleUniqueItems(Object.values(uniqueProducts));
     }
 
     getData();
@@ -81,16 +104,40 @@ function MyFridge() {
   return (
     <div className="MyFridge">
       <div className="btnParent">
+        <Button
+          className="btn"
+          variant="contained"
+          onClick={() => setSelectedCategory(-1)}
+          color={selectedCategory === -1 ? "secondary" : "primary"}
+        >
+          All Items
+        </Button>
         <Button className="btn" variant="contained" color="primary">
           Expiring Soon
         </Button>
-        <Button className="btn" variant="contained" color="primary">
+        <Button
+          size="small"
+          className="btn"
+          variant="contained"
+          onClick={() => setSelectedCategory(4)}
+          color={selectedCategory === 4 ? "secondary" : "primary"}
+        >
           Dairy
         </Button>
-        <Button className="btn" variant="contained" color="primary">
+        <Button
+          className="btn"
+          variant="contained"
+          onClick={() => setSelectedCategory(3)}
+          color={selectedCategory === 3 ? "secondary" : "primary"}
+        >
           Meat
         </Button>
-        <Button className="btn" variant="contained" color="primary">
+        <Button
+          className="btn"
+          variant="contained"
+          onClick={() => setSelectedCategory(5)}
+          color={selectedCategory === 5 ? "secondary" : "primary"}
+        >
           Fruit
         </Button>
         <Button className="btn" variant="contained" color="primary">
@@ -102,7 +149,7 @@ function MyFridge() {
       </div>
 
       <div className="itemParent">
-        {uniqueItems.map((uniqueItem) => {
+        {visibleUniqueItems.map((uniqueItem) => {
           let product = products.find(
             (p) => p.id === uniqueItem.item.product_id
           );
@@ -163,5 +210,4 @@ function MyFridge() {
     </div>
   );
 }
-
 export default MyFridge;
