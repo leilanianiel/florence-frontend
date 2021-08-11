@@ -63,6 +63,10 @@ function MyFridge() {
       const customerResponse = await axios.get(
         `${api}/customer/${customer_id}`
       );
+      // get recipe for current user
+      const recipeResponse = await axios.get(
+        `${api}/recipe/`
+      );
       setCustomer(customerResponse.data);
 
       const productResponse = await axios.get(`${api}/product`);
@@ -140,7 +144,12 @@ function MyFridge() {
         >
           Fruit
         </Button>
-        <Button className="btn" variant="contained" color="primary">
+        <Button
+          className="btn"
+          variant="contained"
+          onClick={() => setSelectedCategory(2)}
+          color={selectedCategory === 2 ? "secondary" : "primary"}
+        >
           Veggies
         </Button>
         <Button className="btn" variant="contained" color="primary">
@@ -192,6 +201,13 @@ function MyFridge() {
         <Fab color="primary" aria-label="add">
           <AddIcon />
         </Fab>
+        <Button
+          className="btn recipes"
+          variant="contained"
+          color="primary"
+        >
+          Find Recipes
+        </Button>
       </div>
       {customer && (
         <Dialog

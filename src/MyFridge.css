@@ -19,7 +19,7 @@
 .btnParent {
   display: flex;
   flex-direction: column;
-  margin-top: 200px;
+  margin-top: 60px;
   margin-right: 150px;
 }
 .btn {
@@ -32,9 +32,13 @@
 }
 .addItem {
     margin-right: 50px !important;
-
 }
 .product-image {
   width: 200px;
   height: 200px;
+}
+
+.recipes{
+  margin-top: 60px !important;
+
 }
