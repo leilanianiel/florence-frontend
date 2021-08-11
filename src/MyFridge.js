@@ -27,6 +27,7 @@ function MyFridge() {
   const [products, setProducts] = useState([]);
   const [visibleUniqueItems, setVisibleUniqueItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(undefined);
+  const [expirySoon, setExpirySoon] = useState(false);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -36,19 +37,25 @@ function MyFridge() {
   const handleClose = () => {
     setOpen(false);
     setSelectedProduct();
+    setExpirySoon(false);
   };
 
   useEffect(() => {
-    if (selectedCategory === undefined || uniqueItems.count === 0) {
+    if (
+      selectedCategory === undefined ||
+      uniqueItems.count === 0 ||
+      products.count === 0
+    ) {
       return;
     }
+
     const newList = uniqueItems.filter((uniqueItem) => {
-      let product = products.find(
-        (product) => product.id === uniqueItem.item.product_id
-      );
       if (selectedCategory === -1) {
         return true;
       }
+      let product = products.find(
+        (product) => product.id === uniqueItem.item.product_id
+      );
       if (!product) {
         return false;
       }
@@ -116,7 +123,15 @@ function MyFridge() {
         >
           All Items
         </Button>
-        <Button className="btn" variant="contained" color="primary">
+        <Button
+          className="btn"
+          variant="contained"
+          onClick={() => {
+            setExpirySoon(true);
+            handleClickOpen();
+          }}
+          color="primary"
+        >
           Expiring Soon
         </Button>
         <Button
@@ -220,6 +235,7 @@ function MyFridge() {
             handleClose={handleClose}
             fridgeId={customer.fridge_id}
             selectedProduct={selectedProduct}
+            expirySoon={expirySoon}
           />
         </Dialog>
       )}
