@@ -132,7 +132,7 @@ function MyFridge() {
             setExpirySoon(true);
             handleClickOpen();
           }}
-          color={selectedCategory === -1 ? "secondary" : "primary"}
+          color={expirySoon ? "secondary" : "primary"}
         >
           Expiring Soon
         </Button>

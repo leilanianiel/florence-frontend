@@ -74,6 +74,9 @@ export default function ItemsPage(props) {
   }
 
   useEffect(() => {
+    if (products.count === 0) {
+      return;
+    }
     getItems();
   }, [products, props.fridgeId, props.selectedProduct]);
 
@@ -98,6 +101,9 @@ export default function ItemsPage(props) {
         {items.map((item) => {
           let product = products.find((p) => p.id === item.product_id);
           console.log(product);
+          if (!product) {
+            return <></>
+          }
 
           let expiryDate = moment(item.expiration);
 
