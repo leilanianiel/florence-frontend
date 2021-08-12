@@ -62,8 +62,11 @@
   color: rgb(157, 224, 33);
 }
 
-.avatar{
+.avatar {
   position: fixed !important;
   top: 20px;
   right: 20px;
+}
+
+body{
 }
