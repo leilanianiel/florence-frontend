@@ -1,0 +1,14 @@
+.Home{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url(./Images/background.png);
+  
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+} 
+
+.logo{
+}

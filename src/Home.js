@@ -1,14 +1,14 @@
 import React from "react";
 import "./Home.css";
-import image from './Images/Home Page.png'
+import image from './Images/Copy of Florence (9).png'
 
 function Home() {
   return (
-    <div className="Home">
+    <div className="Home" logo>
       <img
         className="about florence"
         src={image}
-        alt="Florence the invetory of the electric fridge."
+        alt="logo"
       />
     </div>
   );

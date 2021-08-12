@@ -72,7 +72,7 @@ function MyFridge() {
       );
       // get recipe for current user
       const recipeResponse = await axios.get(
-        `${api}/recipe/`
+        `${api}/recipes/`
       );
       setCustomer(customerResponse.data);
 
