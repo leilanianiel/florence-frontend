@@ -24,6 +24,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function MyFridge() {
   const [uniqueItems, setUniqueItems] = useState([]);
   const [customer, setCustomer] = useState();
+  const [recipe, setRecipe] = useState();
   const [selectedProduct, setSelectedProduct] = useState();
   const [products, setProducts] = useState([]);
   const [visibleUniqueItems, setVisibleUniqueItems] = useState([]);
@@ -72,9 +73,9 @@ function MyFridge() {
         `${api}/customer/${customer_id}`
       );
       // get recipe for current user
-      const recipeResponse = await axios.get(
-        `${api}/recipes/`
-      );
+      const recipeResponse = await axios.get(`${api}/recipes/`);
+      setRecipe(recipeResponse.data);
+    
       setCustomer(customerResponse.data);
 
       const productResponse = await axios.get(`${api}/product`);
@@ -220,11 +221,16 @@ function MyFridge() {
           );
         })}
       </div>
+
       <div className="addItem">
         <Fab color="primary" aria-label="add">
           <AddIcon />
+
         </Fab>
+
         <Button
+        onClick={() => {
+          handleClickOpen();}}
           className="btn recipes"
           variant="contained"
           color="primary"
@@ -232,6 +238,7 @@ function MyFridge() {
           Find Recipes
         </Button>
       </div>
+
       {customer && (
         <Dialog
           fullScreen
