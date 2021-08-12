@@ -2,11 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./MyFridge.css";
 import Button from "@material-ui/core/Button";
-
-
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -233,32 +230,47 @@ function MyFridge() {
 
 
       {/* add product button */}
-      <div className="addItem">
-        <Fab color="primary" aria-label="add">
-          <AddIcon />
-        </Fab>
+      <div>
+
+        <form>
+          <label>
+            Add New Food Product
+            <input type="text" name="name" placeholder="Food" />
+            <input type="text" name="name" placeholder="Category" />
+            <input type="text" name="name" placeholder="Image URL" />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+
+        <div className="addProduct">
+          <Fab color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
+
+
+          {/* drop down menu for adding new products */}
+          <Dropdown>
+            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+          </Dropdown>
+
+        </div>
+
+
+        {/* get recipes button  */}
+        {recipe && <div>{JSON.stringify(recipe)}</div>}
+        <Button
+          onClick={() => {
+            getRecipe();
+          }}
+          className="btn recipes"
+          variant="contained"
+          color="primary"
+        >
+          Find Recipes
+        </Button>
       </div>
-
-      {/* drop down menu for adding new products */}
-      <Dropdown>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-      </Dropdown>
-
-      {/* get recipes button  */}
-      {recipe && <div>{JSON.stringify(recipe)}</div>}
-      <Button
-        onClick={() => {
-          getRecipe();
-        }}
-        className="btn recipes"
-        variant="contained"
-        color="primary"
-      >
-        Find Recipes
-      </Button>
-
 
       {customer && (
         <Dialog
