@@ -30,16 +30,23 @@ function MyFridge() {
   const [visibleUniqueItems, setVisibleUniqueItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(undefined);
   const [expirySoon, setExpirySoon] = useState(false);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const getRecipe = async () => {
+    // get recipe for current user
+    const recipeResponse = await axios.get(`${api}/recipes/`);
+    setRecipe(recipeResponse.data);
+  };
+
 
   const handleClose = () => {
     setOpen(false);
     setSelectedProduct();
     setExpirySoon(false);
+
   };
 
   useEffect(() => {
@@ -72,10 +79,7 @@ function MyFridge() {
       const customerResponse = await axios.get(
         `${api}/customer/${customer_id}`
       );
-      // get recipe for current user
-      const recipeResponse = await axios.get(`${api}/recipes/`);
-      setRecipe(recipeResponse.data);
-    
+
       setCustomer(customerResponse.data);
 
       const productResponse = await axios.get(`${api}/product`);
@@ -221,7 +225,7 @@ function MyFridge() {
           );
         })}
       </div>
-
+      {recipe && <div>{JSON.stringify(recipe)}</div>}
       <div className="addItem">
         <Fab color="primary" aria-label="add">
           <AddIcon />
@@ -229,8 +233,9 @@ function MyFridge() {
         </Fab>
 
         <Button
-        onClick={() => {
-          handleClickOpen();}}
+          onClick={() => {
+            getRecipe();
+          }}
           className="btn recipes"
           variant="contained"
           color="primary"

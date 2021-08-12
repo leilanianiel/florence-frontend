@@ -34,7 +34,7 @@ export default function ItemsPage(props) {
   const [items, setItems] = useState([]);
   const [products, setProducts] = useState([]);
 
-  const handleClickOpen = async (itemId) => {
+  const handleClickDecrease = async (itemId) => {
     const deceaseResponse = await axios.post(
       `${api}/item/${itemId}/decrease_count`
     );
@@ -129,7 +129,7 @@ export default function ItemsPage(props) {
               <CardActions>
                 <Fab
                   onClick={() => {
-                    handleClickOpen(item.id);
+                    handleClickDecrease(item.id);
                   }}
                   color="primary"
                   aria-label="add"
