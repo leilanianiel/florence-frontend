@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./MyFridge.css";
 import Button from "@material-ui/core/Button";
 
+
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -123,6 +124,7 @@ function MyFridge() {
         >
           All Items
         </Button>
+
         <Button
           className="btn"
           variant="contained"
@@ -130,10 +132,11 @@ function MyFridge() {
             setExpirySoon(true);
             handleClickOpen();
           }}
-          color="primary"
+          color={selectedCategory === -1 ? "secondary" : "primary"}
         >
           Expiring Soon
         </Button>
+
         <Button
           size="small"
           className="btn"
@@ -159,6 +162,7 @@ function MyFridge() {
         >
           Fruit
         </Button>
+
         <Button
           className="btn"
           variant="contained"
@@ -167,7 +171,11 @@ function MyFridge() {
         >
           Veggies
         </Button>
-        <Button className="btn" variant="contained" color="primary">
+
+        <Button className="btn"
+          variant="contained"
+          onClick={() => setSelectedCategory(7)}
+          color={selectedCategory === 7 ? "secondary" : "primary"}>
           Drinks
         </Button>
       </div>
