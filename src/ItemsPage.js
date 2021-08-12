@@ -61,16 +61,20 @@ export default function ItemsPage(props) {
     const itemsInFridgeResponse = await axios.get(
       `${api}/fridge/${props.fridgeId}/items`
     );
-    setItems(
-      itemsInFridgeResponse.data.filter((item) => {
-        if (!props.expirySoon) {
-          return item.product_id === props.selectedProduct;
-        } else {
-          let itemExpiry = moment(item.expiration);
-          return itemExpiry.diff(moment(), "days") < 3;
-        }
-      })
+    let itemsToShow = itemsInFridgeResponse.data.filter((item) => {
+      if (!props.expirySoon) {
+        return item.product_id === props.selectedProduct;
+      } else {
+        let itemExpiry = moment(item.expiration);
+        return itemExpiry.diff(moment(), "days") < 3;
+      }
+    });
+    itemsToShow = itemsToShow.sort((left, right) =>
+      moment(left.expiration).diff(moment(right.expiration))
     );
+    console.log(itemsToShow);
+
+    setItems(itemsToShow);
   }
 
   useEffect(() => {
@@ -102,7 +106,7 @@ export default function ItemsPage(props) {
           let product = products.find((p) => p.id === item.product_id);
           console.log(product);
           if (!product) {
-            return <></>
+            return <></>;
           }
 
           let expiryDate = moment(item.expiration);
