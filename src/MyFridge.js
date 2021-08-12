@@ -4,6 +4,10 @@ import "./MyFridge.css";
 import Button from "@material-ui/core/Button";
 
 
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+
+
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -216,6 +220,7 @@ function MyFridge() {
                   onClick={() => {
                     handleClickOpen();
                     setSelectedProduct(product.id);
+
                   }}
                 >
                   show item
@@ -225,24 +230,35 @@ function MyFridge() {
           );
         })}
       </div>
-      {recipe && <div>{JSON.stringify(recipe)}</div>}
+
+
+      {/* add product button */}
       <div className="addItem">
         <Fab color="primary" aria-label="add">
           <AddIcon />
-
         </Fab>
-
-        <Button
-          onClick={() => {
-            getRecipe();
-          }}
-          className="btn recipes"
-          variant="contained"
-          color="primary"
-        >
-          Find Recipes
-        </Button>
       </div>
+
+      {/* drop down menu for adding new products */}
+      <Dropdown>
+        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+      </Dropdown>
+
+      {/* get recipes button  */}
+      {recipe && <div>{JSON.stringify(recipe)}</div>}
+      <Button
+        onClick={() => {
+          getRecipe();
+        }}
+        className="btn recipes"
+        variant="contained"
+        color="primary"
+      >
+        Find Recipes
+      </Button>
+
 
       {customer && (
         <Dialog
