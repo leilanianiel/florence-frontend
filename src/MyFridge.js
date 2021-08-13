@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./MyFridge.css";
 import Button from "@material-ui/core/Button";
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -11,7 +11,7 @@ import CardContent from "@material-ui/core/CardContent";
 import AddIcon from "@material-ui/icons/Add";
 
 import Typography from "@material-ui/core/Typography";
-import { CardMedia, Fab } from "@material-ui/core";
+import { CardMedia, Fab, TextField } from "@material-ui/core";
 import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
 import ItemsPage from "./ItemsPage";
@@ -25,29 +25,41 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function MyFridge() {
   const [uniqueItems, setUniqueItems] = useState([]);
   const [customer, setCustomer] = useState();
-  const [recipe, setRecipe] = useState();
+  const [recipes, setRecipes] = useState();
   const [selectedProduct, setSelectedProduct] = useState();
   const [products, setProducts] = useState([]);
   const [visibleUniqueItems, setVisibleUniqueItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(undefined);
   const [expirySoon, setExpirySoon] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const [categories, setCategories] = useState();
+  const [newProductName, setNewProductName] = useState();
+  const [newProductCategory, setNewProductCategory] = useState();
+  // const [newProductImage, setNewProductImage] = useState();
   const handleClickOpen = () => {
     setOpen(true);
   };
   const getRecipe = async () => {
     // get recipe for current user
     const recipeResponse = await axios.get(`${api}/recipes/`);
-    setRecipe(recipeResponse.data);
+    setRecipes(recipeResponse.data);
   };
+  const onSubmit = async (evt) => {
+    evt.preventDefault();
 
+    const postNewPoduct = await axios.post(`${api}/product`, {
+      name: newProductName,
+      category_id: parseInt(newProductCategory),
+      // image: newProductImage
+    });
+
+    // setNewProduct(postNewPoduct.data);
+  };
 
   const handleClose = () => {
     setOpen(false);
     setSelectedProduct();
     setExpirySoon(false);
-
   };
 
   useEffect(() => {
@@ -80,11 +92,13 @@ function MyFridge() {
       const customerResponse = await axios.get(
         `${api}/customer/${customer_id}`
       );
-
       setCustomer(customerResponse.data);
 
       const productResponse = await axios.get(`${api}/product`);
       setProducts(productResponse.data);
+
+      const categoryResponse = await axios.get(`${api}/category`);
+      setCategories(categoryResponse.data);
     }
 
     getData();
@@ -178,10 +192,12 @@ function MyFridge() {
           Veggies
         </Button>
 
-        <Button className="btn"
+        <Button
+          className="btn"
           variant="contained"
           onClick={() => setSelectedCategory(7)}
-          color={selectedCategory === 7 ? "secondary" : "primary"}>
+          color={selectedCategory === 7 ? "secondary" : "primary"}
+        >
           Drinks
         </Button>
       </div>
@@ -217,7 +233,6 @@ function MyFridge() {
                   onClick={() => {
                     handleClickOpen();
                     setSelectedProduct(product.id);
-
                   }}
                 >
                   show item
@@ -228,38 +243,67 @@ function MyFridge() {
         })}
       </div>
 
-
       {/* add product button */}
       <div>
-
-        <form>
+        <form onSubmit={onSubmit}>
           <label>
             Add New Food Product
-            <input type="text" name="name" placeholder="Food" />
-            <input type="text" name="name" placeholder="Category" />
-            <input type="text" name="name" placeholder="Image URL" />
+            <TextField
+              type="text"
+              name="name"
+              placeholder="Food Name"
+              onChange={(e) => setNewProductName(e.target.value)}
+            />
+            <select
+              name="category"
+              onChange={(e) => setNewProductCategory(e.target.value)}
+            >
+              {categories &&
+                categories.map((category) => (
+                  <option value={category.id}>{category.name}</option>
+                ))}
+            </select>
+            {/* <TextField
+              type="number"
+              name="category"
+              placeholder="Category"
+              onChange={(e) => setNewProductCategory(e.target.value)}
+            /> */}
+            {/* <input
+              type="file"
+              name="image"
+              onChange={(e) => setNewProductImage(e.target.value)}
+              placeholder="Image URL"
+            /> */}
           </label>
           <input type="submit" value="Submit" />
         </form>
-
         <div className="addProduct">
           <Fab color="primary" aria-label="add">
             <AddIcon />
           </Fab>
 
-
           {/* drop down menu for adding new products */}
-          <Dropdown>
+          {/* <Dropdown>
             <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
             <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
             <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-          </Dropdown>
-
+          </Dropdown> */}
         </div>
-
-
         {/* get recipes button  */}
-        {recipe && <div>{JSON.stringify(recipe)}</div>}
+        <div>
+          {recipes &&
+            recipes.map((recipe) => (
+              <div key={recipe.name}>
+                <img src={recipe.image} alt={recipe.name} /> 
+                <div>
+                  <a href={recipe.url} rel="noreferrer" target="_blank">
+                    {recipe.name}
+                  </a>
+                </div>
+              </div>
+            ))}
+        </div>
         <Button
           onClick={() => {
             getRecipe();
