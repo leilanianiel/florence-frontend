@@ -93,7 +93,7 @@ function MyFridge() {
     if (
       selectedCategory === undefined ||
       uniqueItems.count === 0 ||
-      products.count === 0
+      products.count === 0 
     ) {
       return;
     }
