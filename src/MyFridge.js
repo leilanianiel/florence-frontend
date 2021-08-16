@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./MyFridge.css";
@@ -47,7 +48,7 @@ function MyFridge() {
   };
   const getRecipe = async () => {
     // get recipe for current user
-    const recipeResponse = await axios.get(${api}/recipes/);
+    const recipeResponse = await axios.get(`${api}/recipes/`);
     setRecipes(recipeResponse.data);
   };
 
@@ -55,7 +56,7 @@ function MyFridge() {
   const onSubmit = async (evt) => {
     evt.preventDefault();
 
-    const postNewProduct = await axios.post(${api}/product, {
+    const postNewProduct = await axios.post(`${api}/product`, {
       name: newProductName,
       category_id: parseInt(newProductCategory),
       image: newProductImage
@@ -77,7 +78,7 @@ function MyFridge() {
     if (expiration) {
       data.expiration = expiration
     }
-    const postNewItem = await axios.post(${api}/item, data);
+    const postNewItem = await axios.post(`${api}/item`, data);
 
   }
 
@@ -117,14 +118,14 @@ function MyFridge() {
   useEffect(() => {
     async function getData() {
       const customerResponse = await axios.get(
-        ${api}/customer/${customer_id}
+        `${api}/customer/${customer_id}`
       );
       setCustomer(customerResponse.data);
 
-      const productResponse = await axios.get(${api}/product);
+      const productResponse = await axios.get(`${api}/product`);
       setProducts(productResponse.data);
 
-      const categoryResponse = await axios.get(${api}/category);
+      const categoryResponse = await axios.get(`${api}/category`);
       setCategories(categoryResponse.data);
     }
 
@@ -138,7 +139,7 @@ function MyFridge() {
 
     async function getData() {
       const itemsInFridgeResponse = await axios.get(
-        ${api}/fridge/${customer.fridge_id}/items
+        `${api}/fridge/${customer.fridge_id}/items`
       );
       const uniqueProducts = {};
       itemsInFridgeResponse.data.map((item) => {
