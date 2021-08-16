@@ -36,6 +36,7 @@ function MyFridge() {
   const [newProductName, setNewProductName] = useState();
   const [newProductCategory, setNewProductCategory] = useState();
   const [newProductImage, setNewProductImage] = useState();
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -53,6 +54,7 @@ function MyFridge() {
       image: newProductImage,
     });
 
+    // // eslint-disable-next-line no-undef
     // setNewProduct(postNewPoduct.data);
   };
 
@@ -114,7 +116,7 @@ function MyFridge() {
         `${api}/fridge/${customer.fridge_id}/items`
       );
       const uniqueProducts = {};
-      itemsInFridgeResponse.data.map(item => {
+      itemsInFridgeResponse.data.map((item) => {
         if (uniqueProducts[item.product_id]) {
           uniqueProducts[item.product_id].quantity += item.count;
         } else {
@@ -247,7 +249,7 @@ function MyFridge() {
       <div>
         <form onSubmit={onSubmit}>
           <label>Add New Food Product</label>
-          <div>
+          <div> {/* Add name of product */}
             <TextField
               type="text"
               name="name"
@@ -255,12 +257,14 @@ function MyFridge() {
               onChange={(e) => setNewProductName(e.target.value)}
             />
           </div>
+          <div> {/* Add image url */}
           <TextField
             type="url"
             name="Image"
             placeholder="Paste image URL"
             onChange={(e) => setNewProductImage(e.target.value)}
           />
+          </div>
           <select
             name="category"
             onChange={(e) => setNewProductCategory(e.target.value)}
@@ -270,31 +274,14 @@ function MyFridge() {
                 <option value={category.id}>{category.name}</option>
               ))}
           </select>
-          {/* <TextField
-              type="number"
-              name="category"
-              placeholder="Category"
-              onChange={(e) => setNewProductCategory(e.target.value)}
-            /> */}
-          {/* <input
-              type="file"
-              name="image"
-              onChange={(e) => setNewProductImage(e.target.value)}
-              placeholder="Image URL"
-            /> */}
+          
           <input type="submit" value="Submit" />
         </form>
+
         <div className="addProduct">
           <Fab color="primary" aria-label="add">
             <AddIcon />
           </Fab>
-
-          {/* drop down menu for adding new products */}
-          {/* <Dropdown>
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-          </Dropdown> */}
         </div>
         {/* get recipes button  */}
         <div>
