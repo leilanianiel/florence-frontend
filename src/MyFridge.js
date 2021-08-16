@@ -35,11 +35,11 @@ function MyFridge() {
   const [categories, setCategories] = useState();
   const [newProductName, setNewProductName] = useState();
   const [newProductCategory, setNewProductCategory] = useState();
-  // const [newProductImage, setNewProductImage] = useState();
+  const [newProductImage, setNewProductImage] = useState();
   const [newItemCount, setNewItemCount] = useState();
   const [newItemProductId, setNewItemProductId] = useState();
-  const [newItemFridgeId, setNewItemFridgeId] = useState();
   const [newItemExpiration, setNewItemExpiration] = useState();
+
 
 
   const handleClickOpen = () => {
@@ -55,13 +55,13 @@ function MyFridge() {
   const onSubmit = async (evt) => {
     evt.preventDefault();
 
-    const postNewPoduct = await axios.post(`${api}/product`, {
+    const postNewProduct = await axios.post(`${api}/product`, {
       name: newProductName,
       category_id: parseInt(newProductCategory),
-      // image: newProductImage
+      image: newProductImage
     });
 
-    // setNewProduct(postNewPoduct.data);
+    // setNewProduct(postNewProduct.data);
   };
   // SUBMIT NEW ITEM
   const itemSubmit = async (evt) => {
@@ -274,30 +274,35 @@ function MyFridge() {
       {/* add product button */}
       <div>
         <form onSubmit={onSubmit}>
-          <label>
-            Add New Food Product
+          <label>Add New Food Product</label>
+          <div>
             <TextField
               type="text"
               name="name"
               placeholder="Food Name"
               onChange={(e) => setNewProductName(e.target.value)}
             />
-            <select
-              name="category"
-              onChange={(e) => setNewProductCategory(e.target.value)}
-            >
-              {categories &&
-                categories.map((category) => (
-                  <option value={category.id}>{category.name}</option>
-                ))}
-            </select>
+          </div>
+          <TextField
+            type="url"
+            name="Image"
+            placeholder="Paste image URL"
+            onChange={(e) => setNewProductImage(e.target.value)}
+          />
+          <select
+            name="category"
+            onChange={(e) => setNewProductCategory(e.target.value)}
+          >
+            {categories &&
+              categories.map((category) => (
+                <option value={category.id}>{category.name}</option>
+              ))}
+          </select>
 
-          </label>
           <input type="submit" value="Submit" />
         </form>
+
         <div className="addProduct">
-
-
 
           {/* <Fab color="primary" aria-label="add">
             <AddIcon />
@@ -310,7 +315,7 @@ function MyFridge() {
             <form onSubmit={itemSubmit}>
               <label>
                 Add New Food Item
-               
+
                 <TextField
                   type="number"
                   name="product_id"
@@ -329,7 +334,7 @@ function MyFridge() {
                   placeholder="Expiration"
                   onChange={(e) => setNewItemExpiration(e.target.value)}
                 />
-              
+
 
               </label>
               <input type="submit" value="Submit" />

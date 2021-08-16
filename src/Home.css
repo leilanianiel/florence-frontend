@@ -1,14 +1,12 @@
-.Home{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-image: url(./Images/background.png);
-  
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-} 
+.Home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url(./Images/background.png);
 
-.logo{
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
