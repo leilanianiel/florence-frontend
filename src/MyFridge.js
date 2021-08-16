@@ -35,7 +35,7 @@ function MyFridge() {
   const [categories, setCategories] = useState();
   const [newProductName, setNewProductName] = useState();
   const [newProductCategory, setNewProductCategory] = useState();
-  // const [newProductImage, setNewProductImage] = useState();
+  const [newProductImage, setNewProductImage] = useState();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -50,7 +50,7 @@ function MyFridge() {
     const postNewPoduct = await axios.post(`${api}/product`, {
       name: newProductName,
       category_id: parseInt(newProductCategory),
-      // image: newProductImage
+      image: newProductImage,
     });
 
     // setNewProduct(postNewPoduct.data);
@@ -114,7 +114,7 @@ function MyFridge() {
         `${api}/fridge/${customer.fridge_id}/items`
       );
       const uniqueProducts = {};
-      itemsInFridgeResponse.data.map((item) => {
+      itemsInFridgeResponse.data.map(item => {
         if (uniqueProducts[item.product_id]) {
           uniqueProducts[item.product_id].quantity += item.count;
         } else {
@@ -246,36 +246,42 @@ function MyFridge() {
       {/* add product button */}
       <div>
         <form onSubmit={onSubmit}>
-          <label>
-            Add New Food Product
+          <label>Add New Food Product</label>
+          <div>
             <TextField
               type="text"
               name="name"
               placeholder="Food Name"
               onChange={(e) => setNewProductName(e.target.value)}
             />
-            <select
-              name="category"
-              onChange={(e) => setNewProductCategory(e.target.value)}
-            >
-              {categories &&
-                categories.map((category) => (
-                  <option value={category.id}>{category.name}</option>
-                ))}
-            </select>
-            {/* <TextField
+          </div>
+          <TextField
+            type="url"
+            name="Image"
+            placeholder="Paste image URL"
+            onChange={(e) => setNewProductImage(e.target.value)}
+          />
+          <select
+            name="category"
+            onChange={(e) => setNewProductCategory(e.target.value)}
+          >
+            {categories &&
+              categories.map((category) => (
+                <option value={category.id}>{category.name}</option>
+              ))}
+          </select>
+          {/* <TextField
               type="number"
               name="category"
               placeholder="Category"
               onChange={(e) => setNewProductCategory(e.target.value)}
             /> */}
-            {/* <input
+          {/* <input
               type="file"
               name="image"
               onChange={(e) => setNewProductImage(e.target.value)}
               placeholder="Image URL"
             /> */}
-          </label>
           <input type="submit" value="Submit" />
         </form>
         <div className="addProduct">
