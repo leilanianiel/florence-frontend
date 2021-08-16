@@ -249,7 +249,9 @@ function MyFridge() {
       <div>
         <form onSubmit={onSubmit}>
           <label>Add New Food Product</label>
-          <div> {/* Add name of product */}
+          <div>
+            {" "}
+            {/* Add name of product */}
             <TextField
               type="text"
               name="name"
@@ -257,14 +259,17 @@ function MyFridge() {
               onChange={(e) => setNewProductName(e.target.value)}
             />
           </div>
-          <div> {/* Add image url */}
-          <TextField
-            type="url"
-            name="Image"
-            placeholder="Paste image URL"
-            onChange={(e) => setNewProductImage(e.target.value)}
-          />
+          <div>
+            {" "}
+            {/* Add image url */}
+            <TextField
+              type="url"
+              name="Image"
+              placeholder="Paste image URL"
+              onChange={(e) => setNewProductImage(e.target.value)}
+            />
           </div>
+
           <select
             name="category"
             onChange={(e) => setNewProductCategory(e.target.value)}
@@ -274,16 +279,15 @@ function MyFridge() {
                 <option value={category.id}>{category.name}</option>
               ))}
           </select>
-          
+
           <input type="submit" value="Submit" />
         </form>
-
-        <div className="addProduct">
-          <Fab color="primary" aria-label="add">
-            <AddIcon />
-          </Fab>
-        </div>
-        {/* get recipes button  */}
+      </div>
+      <div>
+        
+      </div>
+      {/* get recipes button  */}
+      <div>
         <div>
           {recipes &&
             recipes.map((recipe) => (
