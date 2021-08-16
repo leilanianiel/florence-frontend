@@ -36,25 +36,52 @@ function MyFridge() {
   const [newProductName, setNewProductName] = useState();
   const [newProductCategory, setNewProductCategory] = useState();
   const [newProductImage, setNewProductImage] = useState();
+  const [newItemCount, setNewItemCount] = useState();
+  const [newItemProductId, setNewItemProductId] = useState();
+  const [newItemExpiration, setNewItemExpiration] = useState();
+
+
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const getRecipe = async () => {
     // get recipe for current user
-    const recipeResponse = await axios.get(`${api}/recipes/`);
+    const recipeResponse = await axios.get(${api}/recipes/);
     setRecipes(recipeResponse.data);
   };
+
+  // SUBMIT NEW PRODUCT
   const onSubmit = async (evt) => {
     evt.preventDefault();
 
-    const postNewPoduct = await axios.post(`${api}/product`, {
+    const postNewProduct = await axios.post(${api}/product, {
       name: newProductName,
       category_id: parseInt(newProductCategory),
-      image: newProductImage,
+      image: newProductImage
     });
 
-    // setNewProduct(postNewPoduct.data);
+    // setNewProduct(postNewProduct.data);
   };
+  // SUBMIT NEW ITEM
+  const itemSubmit = async (evt) => {
+    evt.preventDefault();
+    let data = {
+      count: parseInt(newItemCount),
+      product_id: parseInt(newItemProductId),
+      fridge_id: customer.fridge_id,
+
+    }
+
+    const expiration = parseInt(newItemExpiration)
+    if (expiration) {
+      data.expiration = expiration
+    }
+    const postNewItem = await axios.post(${api}/item, data);
+
+  }
+
+
 
   const handleClose = () => {
     setOpen(false);
@@ -66,7 +93,7 @@ function MyFridge() {
     if (
       selectedCategory === undefined ||
       uniqueItems.count === 0 ||
-      products.count === 0
+      products.count === 0 
     ) {
       return;
     }
@@ -90,14 +117,14 @@ function MyFridge() {
   useEffect(() => {
     async function getData() {
       const customerResponse = await axios.get(
-        `${api}/customer/${customer_id}`
+        ${api}/customer/${customer_id}
       );
       setCustomer(customerResponse.data);
 
-      const productResponse = await axios.get(`${api}/product`);
+      const productResponse = await axios.get(${api}/product);
       setProducts(productResponse.data);
 
-      const categoryResponse = await axios.get(`${api}/category`);
+      const categoryResponse = await axios.get(${api}/category);
       setCategories(categoryResponse.data);
     }
 
@@ -111,10 +138,10 @@ function MyFridge() {
 
     async function getData() {
       const itemsInFridgeResponse = await axios.get(
-        `${api}/fridge/${customer.fridge_id}/items`
+        ${api}/fridge/${customer.fridge_id}/items
       );
       const uniqueProducts = {};
-      itemsInFridgeResponse.data.map(item => {
+      itemsInFridgeResponse.data.map((item) => {
         if (uniqueProducts[item.product_id]) {
           uniqueProducts[item.product_id].quantity += item.count;
         } else {
@@ -134,6 +161,7 @@ function MyFridge() {
   }, [customer, products]);
 
   return (
+
     <div className="MyFridge">
       <div className="btnParent">
         <Button
@@ -270,76 +298,95 @@ function MyFridge() {
                 <option value={category.id}>{category.name}</option>
               ))}
           </select>
-          {/* <TextField
-              type="number"
-              name="category"
-              placeholder="Category"
-              onChange={(e) => setNewProductCategory(e.target.value)}
-            /> */}
-          {/* <input
-              type="file"
-              name="image"
-              onChange={(e) => setNewProductImage(e.target.value)}
-              placeholder="Image URL"
-            /> */}
+
           <input type="submit" value="Submit" />
         </form>
+
         <div className="addProduct">
-          <Fab color="primary" aria-label="add">
+
+          {/* <Fab color="primary" aria-label="add">
             <AddIcon />
-          </Fab>
-
-          {/* drop down menu for adding new products */}
-          {/* <Dropdown>
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-          </Dropdown> */}
+          </Fab> */}
         </div>
-        {/* get recipes button  */}
+
+        {/* ITEM SUBMIT BUTTON */}
         <div>
-          {recipes &&
-            recipes.map((recipe) => (
-              <div key={recipe.name}>
-                <img src={recipe.image} alt={recipe.name} /> 
-                <div>
-                  <a href={recipe.url} rel="noreferrer" target="_blank">
-                    {recipe.name}
-                  </a>
-                </div>
-              </div>
-            ))}
-        </div>
-        <Button
-          onClick={() => {
-            getRecipe();
-          }}
-          className="btn recipes"
-          variant="contained"
-          color="primary"
-        >
-          Find Recipes
-        </Button>
-      </div>
+          <div>
+            <form onSubmit={itemSubmit}>
+              <label>
+                Add New Food Item
 
-      {customer && (
-        <Dialog
-          fullScreen
-          open={open}
-          onClose={handleClose}
-          TransitionComponent={Transition}
-        >
-          <ItemsPage
-            handleClose={handleClose}
-            fridgeId={customer.fridge_id}
-            selectedProduct={selectedProduct}
-            expirySoon={expirySoon}
-          />
-        </Dialog>
-      )}
+                <TextField
+                  type="number"
+                  name="product_id"
+                  placeholder="Product ID"
+                  onChange={(e) => setNewItemProductId(e.target.value)}
+                />
+                <TextField
+                  type="number"
+                  name="count"
+                  placeholder="Count"
+                  onChange={(e) => setNewItemCount(e.target.value)}
+                />
+                <TextField
+                  type="number"
+                  name="expiration"
+                  placeholder="Expiration"
+                  onChange={(e) => setNewItemExpiration(e.target.value)}
+                />
+
+
+              </label>
+              <input type="submit" value="Submit" />
+            </form>
+            <div className="addProduct"></div>
+          </div>
+
+
+
+          {/* get recipes button  */}
+          <div>
+            {recipes &&
+              recipes.map((recipe) => (
+                <div key={recipe.name}>
+                  <img src={recipe.image} alt={recipe.name} />
+                  <div>
+                    <a href={recipe.url} rel="noreferrer" target="_blank">
+                      {recipe.name}
+                    </a>
+                  </div>
+                </div>
+              ))}
+          </div>
+          <Button
+            onClick={() => {
+              getRecipe();
+            }}
+            className="btn recipes"
+            variant="contained"
+            color="primary"
+          >
+            Find Recipes
+          </Button>
+        </div>
+
+        {customer && (
+          <Dialog
+            fullScreen
+            open={open}
+            onClose={handleClose}
+            TransitionComponent={Transition}
+          >
+            <ItemsPage
+              handleClose={handleClose}
+              fridgeId={customer.fridge_id}
+              selectedProduct={selectedProduct}
+              expirySoon={expirySoon}
+            />
+          </Dialog>
+        )}
+      </div>
     </div>
   );
 }
-
-// THIS IS VERY HARD //
 export default MyFridge;
