@@ -340,4 +340,6 @@ function MyFridge() {
     </div>
   );
 }
+
+// THIS IS VERY HARD //
 export default MyFridge;
