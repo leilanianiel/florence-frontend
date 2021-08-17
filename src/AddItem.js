@@ -34,8 +34,9 @@ function AddItem(props) {
 
   return (
     <FormControl>
-      <form onSubmit={itemSubmit}>
-        <label>Add New Food Item</label>
+      <div className="label">
+      <form  onSubmit={itemSubmit}>
+        <label>Add New Item</label>
         <div>
           <Select
             value={newItemProductId}
@@ -60,18 +61,22 @@ function AddItem(props) {
             onChange={(e) => setNewItemCount(e.target.value)}
           />
         </div>
-        <TextField
+        <TextField 
           variant="outlined"
           type="number"
           name="expiration"
           placeholder="Expiration"
           onChange={(e) => setNewItemExpiration(e.target.value)}
         />
-        <Button type="submit" variant="contained" color="primary">
+        <div className="space">
+        <Button  type="submit" variant="contained" color="primary">
           Submit
         </Button>
+        </div>
       </form>
+      </div>
     </FormControl>
+    
   );
 }
 
