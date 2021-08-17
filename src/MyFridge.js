@@ -103,7 +103,7 @@ function MyFridge() {
       `${api}/fridge/${customer.fridge_id}/items`
     );
     const uniqueProducts = {};
-    const itemsExpiringSoon = 0;
+
     itemsInFridgeResponse.data.map((item) => {
       if (uniqueProducts[item.product_id]) {
         uniqueProducts[item.product_id].quantity += item.count;
@@ -119,6 +119,7 @@ function MyFridge() {
       }
       return item;
     });
+
     let expiringItems = Object.values(uniqueProducts).filter((item) => {
       let itemExpiry = moment(item.item.expiration);
       return itemExpiry.diff(moment(), "days") < 3;
@@ -129,7 +130,6 @@ function MyFridge() {
       let title = "Hey!";
       let notification = undefined;
       let iconPath = window.location.origin + icon;
-      console.log(iconPath);
       let notificationData = {
         body: `You have ${expiringItems.length} items expiring soon`,
         image: expiringItems[0].product.image,
