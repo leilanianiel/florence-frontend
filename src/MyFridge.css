@@ -13,8 +13,8 @@
   flex-wrap: wrap;
 }
 .item {
-    margin-bottom: 15px;
-    margin-right: 15px;
+  margin-bottom: 15px;
+  margin-right: 15px;
 }
 .btnParent {
   display: flex;
@@ -31,14 +31,43 @@
   font-size: 15px !important;
 }
 .addItem {
-    margin-right: 50px !important;
+  margin-right: 50px !important;
 }
 .product-image {
   width: 200px;
   height: 200px;
 }
 
-.recipes{
+.recipes {
   margin-top: 60px !important;
+}
 
+.label {
+  font-family: Impact;
+  font-size: 40px;
+  font: bold;
+  color: #ffad9c;
+  
+}
+.label2{
+  font-family: Impact;
+  font-size: 40px;
+  font: bold;
+  color: #ffad9c;
+  font-variant: normal;
+}
+
+.MuiInputBase-root{
+  margin-bottom: 20px;
+
+}
+
+.space{
+  margin-bottom: 45px;
+  margin-top: 25px;
+  
+}
+
+form{
+  width: 300px;
 }
