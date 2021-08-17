@@ -6,23 +6,30 @@ import {
   TextField,
 } from "@material-ui/core";
 import axios from "axios";
+import { values } from "lodash";
 import React, { useState } from "react";
 import "./LogIn.css";
 const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
 
 function AddItem(props) {
-  const [newItemCount, setNewItemCount] = useState();
+  const [newItemCount, setNewItemCount] = useState('');
   const [newItemProductId, setNewItemProductId] = useState(-1);
-  const [newItemExpiration, setNewItemExpiration] = useState();
+  const [newItemExpiration, setNewItemExpiration] = useState('');
+  const [formKeyItem, setFormKeyItem] = useState(10);
 
   // SUBMIT NEW ITEM
   const itemSubmit = async (evt) => {
     evt.preventDefault();
+    setFormKeyItem(formKeyItem + 1)
     let data = {
       count: parseInt(newItemCount),
       product_id: parseInt(newItemProductId),
       fridge_id: props.fridgeId,
     };
+
+  // resetForm= () => {
+  //   this.setState({count:''} )
+  // }
 
     const expiration = parseInt(newItemExpiration);
     if (expiration) {
@@ -33,7 +40,7 @@ function AddItem(props) {
   };
 
   return (
-    <FormControl>
+    <FormControl key={formKeyItem}>
       <form onSubmit={itemSubmit}>
         <label>Add New Food Item</label>
         <div>

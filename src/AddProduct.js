@@ -11,13 +11,15 @@ import "./LogIn.css";
 const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
 
 function AddProduct(props) {
-  const [newProductName, setNewProductName] = useState();
+  const [newProductName, setNewProductName] = useState('');
   const [newProductCategory, setNewProductCategory] = useState(-1);
-  const [newProductImage, setNewProductImage] = useState();
+  const [newProductImage, setNewProductImage] = useState('');
+  const [formKey, setFormKey] = useState(10);
 
   // SUBMIT NEW PRODUCT
   const onSubmit = async (evt) => {
     evt.preventDefault();
+    setFormKey(formKey + 1)
 
     const postNewProduct = await axios.post(`${api}/product`, {
       name: newProductName,
@@ -31,7 +33,7 @@ function AddProduct(props) {
   };
 
   return (
-    <FormControl>
+    <FormControl key={formKey}>
       <form onSubmit={onSubmit}>
         <label>Add New Food Product</label>
         <div>
