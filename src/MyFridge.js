@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./MyFridge.css";
 import Button from "@material-ui/core/Button";
 import "react-dropdown/style.css";
+import Quagga from "quagga";
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
