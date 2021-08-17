@@ -9,7 +9,7 @@ Florence FridgeApp can assist in making our lives easier and more efficient. Thi
 * Recieve expiration notification.
 * Sorted by catergories.
 * Recipe API "Spoonacular"
-* Barcode Scanner "" 
+* Barcode Scanner "quaggaJS" 
 
 # FlorenceFrontend
 Florence Fridge App
