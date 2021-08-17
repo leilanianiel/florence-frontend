@@ -2,16 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./MyFridge.css";
 import Button from "@material-ui/core/Button";
-import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+import Quagga from "quagga";
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import AddIcon from "@material-ui/icons/Add";
 
 import Typography from "@material-ui/core/Typography";
-import { CardMedia, Fab, TextField } from "@material-ui/core";
+import { CardMedia } from "@material-ui/core";
 import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
 import ItemsPage from "./ItemsPage";
@@ -51,6 +50,8 @@ function MyFridge() {
     setExpirySoon(false);
   };
 
+  const alphaSort = (a, b) => a.product.name.localeCompare(b.product.name);
+  const alphaSortName = (a, b) => a.name.localeCompare(b.name);
   useEffect(() => {
     if (
       selectedCategory === undefined ||
@@ -73,7 +74,7 @@ function MyFridge() {
       return product.category_id === selectedCategory;
     });
 
-    setVisibleUniqueItems(newList);
+    setVisibleUniqueItems(newList.sort(alphaSort));
   }, [products, selectedCategory, uniqueItems]);
 
   useEffect(() => {
@@ -84,7 +85,7 @@ function MyFridge() {
       setCustomer(customerResponse.data);
 
       const categoryResponse = await axios.get(`${api}/category`);
-      setCategories(categoryResponse.data);
+      setCategories(categoryResponse.data.sort(alphaSortName));
     }
 
     getProducts();
@@ -93,7 +94,7 @@ function MyFridge() {
 
   async function getProducts() {
     const productResponse = await axios.get(`${api}/product`);
-    setProducts(productResponse.data);
+    setProducts(productResponse.data.sort(alphaSortName));
   }
   async function getItems() {
     const itemsInFridgeResponse = await axios.get(
@@ -104,16 +105,21 @@ function MyFridge() {
       if (uniqueProducts[item.product_id]) {
         uniqueProducts[item.product_id].quantity += item.count;
       } else {
-        uniqueProducts[item.product_id] = {
-          quantity: item.count,
-          item,
-        };
+        let product = products.find((p) => p.id === item.product_id);
+        if (product) {
+          uniqueProducts[item.product_id] = {
+            quantity: item.count,
+            product,
+            item,
+          };
+        }
       }
       return item;
     });
 
     setUniqueItems(Object.values(uniqueProducts));
-    setVisibleUniqueItems(Object.values(uniqueProducts));
+
+    setVisibleUniqueItems(Object.values(uniqueProducts).sort(alphaSort));
   }
   useEffect(() => {
     if (!customer || products.length === 0) {
@@ -193,7 +199,7 @@ function MyFridge() {
       </div>
 
       <div className="itemParent">
-        {visibleUniqueItems.map((uniqueItem) => {
+        {visibleUniqueItems.map((uniqueItem, index) => {
           let product = products.find(
             (p) => p.id === uniqueItem.item.product_id
           );
@@ -202,7 +208,7 @@ function MyFridge() {
           }
 
           return (
-            <Card className="item">
+            <Card className="item" key={index}>
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
                   {product.name}
