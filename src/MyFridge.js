@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./MyFridge.css";
@@ -16,6 +15,8 @@ import { CardMedia, Fab, TextField } from "@material-ui/core";
 import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
 import ItemsPage from "./ItemsPage";
+import AddProduct from "./AddProduct";
+import AddItem from "./AddItem";
 const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
 const customer_id = process.env.REACT_APP_TEST_USER || window.userId;
 
@@ -34,14 +35,6 @@ function MyFridge() {
   const [expirySoon, setExpirySoon] = useState(false);
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState();
-  const [newProductName, setNewProductName] = useState();
-  const [newProductCategory, setNewProductCategory] = useState();
-  const [newProductImage, setNewProductImage] = useState();
-  const [newItemCount, setNewItemCount] = useState();
-  const [newItemProductId, setNewItemProductId] = useState();
-  const [newItemExpiration, setNewItemExpiration] = useState();
-
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,38 +44,6 @@ function MyFridge() {
     const recipeResponse = await axios.get(`${api}/recipes/`);
     setRecipes(recipeResponse.data);
   };
-
-  // SUBMIT NEW PRODUCT
-  const onSubmit = async (evt) => {
-    evt.preventDefault();
-
-    const postNewProduct = await axios.post(`${api}/product`, {
-      name: newProductName,
-      category_id: parseInt(newProductCategory),
-      image: newProductImage
-    });
-
-    // setNewProduct(postNewProduct.data);
-  };
-  // SUBMIT NEW ITEM
-  const itemSubmit = async (evt) => {
-    evt.preventDefault();
-    let data = {
-      count: parseInt(newItemCount),
-      product_id: parseInt(newItemProductId),
-      fridge_id: customer.fridge_id,
-
-    }
-
-    const expiration = parseInt(newItemExpiration)
-    if (expiration) {
-      data.expiration = expiration
-    }
-    const postNewItem = await axios.post(`${api}/item`, data);
-
-  }
-
-
 
   const handleClose = () => {
     setOpen(false);
@@ -94,7 +55,7 @@ function MyFridge() {
     if (
       selectedCategory === undefined ||
       uniqueItems.count === 0 ||
-      products.count === 0 
+      products.count === 0
     ) {
       return;
     }
@@ -122,47 +83,47 @@ function MyFridge() {
       );
       setCustomer(customerResponse.data);
 
-      const productResponse = await axios.get(`${api}/product`);
-      setProducts(productResponse.data);
-
       const categoryResponse = await axios.get(`${api}/category`);
       setCategories(categoryResponse.data);
     }
 
+    getProducts();
     getData();
   }, []);
 
+  async function getProducts() {
+    const productResponse = await axios.get(`${api}/product`);
+    setProducts(productResponse.data);
+  }
+  async function getItems() {
+    const itemsInFridgeResponse = await axios.get(
+      `${api}/fridge/${customer.fridge_id}/items`
+    );
+    const uniqueProducts = {};
+    itemsInFridgeResponse.data.map((item) => {
+      if (uniqueProducts[item.product_id]) {
+        uniqueProducts[item.product_id].quantity += item.count;
+      } else {
+        uniqueProducts[item.product_id] = {
+          quantity: item.count,
+          item,
+        };
+      }
+      return item;
+    });
+
+    setUniqueItems(Object.values(uniqueProducts));
+    setVisibleUniqueItems(Object.values(uniqueProducts));
+  }
   useEffect(() => {
     if (!customer || products.length === 0) {
       return;
     }
 
-    async function getData() {
-      const itemsInFridgeResponse = await axios.get(
-        `${api}/fridge/${customer.fridge_id}/items`
-      );
-      const uniqueProducts = {};
-      itemsInFridgeResponse.data.map((item) => {
-        if (uniqueProducts[item.product_id]) {
-          uniqueProducts[item.product_id].quantity += item.count;
-        } else {
-          uniqueProducts[item.product_id] = {
-            quantity: item.count,
-            item,
-          };
-        }
-        return item;
-      });
-
-      setUniqueItems(Object.values(uniqueProducts));
-      setVisibleUniqueItems(Object.values(uniqueProducts));
-    }
-
-    getData();
+    getItems();
   }, [customer, products]);
 
   return (
-
     <div className="MyFridge">
       <div className="btnParent">
         <Button
@@ -274,77 +235,26 @@ function MyFridge() {
 
       {/* add product button */}
       <div>
-        <form onSubmit={onSubmit}>
-          <label>Add New Food Product</label>
-          <div>
-            <TextField
-              type="text"
-              name="name"
-              placeholder="Food Name"
-              onChange={(e) => setNewProductName(e.target.value)}
-            />
-          </div>
-          <TextField
-            type="url"
-            name="Image"
-            placeholder="Paste image URL"
-            onChange={(e) => setNewProductImage(e.target.value)}
-          />
-          <select
-            name="category"
-            onChange={(e) => setNewProductCategory(e.target.value)}
-          >
-            {categories &&
-              categories.map((category) => (
-                <option value={category.id}>{category.name}</option>
-              ))}
-          </select>
-
-          <input type="submit" value="Submit" />
-        </form>
-
         <div className="addProduct">
-
           {/* <Fab color="primary" aria-label="add">
             <AddIcon />
           </Fab> */}
         </div>
-
+        {categories && (
+          <AddProduct
+            getProducts={getProducts}
+            categories={categories}
+          ></AddProduct>
+        )}
+        {customer && products && (
+          <AddItem
+            getItems={getItems}
+            products={products}
+            fridgeId={customer.fridge_id}
+          ></AddItem>
+        )}
         {/* ITEM SUBMIT BUTTON */}
         <div>
-          <div>
-            <form onSubmit={itemSubmit}>
-              <label>
-                Add New Food Item
-
-                <TextField
-                  type="number"
-                  name="product_id"
-                  placeholder="Product ID"
-                  onChange={(e) => setNewItemProductId(e.target.value)}
-                />
-                <TextField
-                  type="number"
-                  name="count"
-                  placeholder="Count"
-                  onChange={(e) => setNewItemCount(e.target.value)}
-                />
-                <TextField
-                  type="number"
-                  name="expiration"
-                  placeholder="Expiration"
-                  onChange={(e) => setNewItemExpiration(e.target.value)}
-                />
-
-
-              </label>
-              <input type="submit" value="Submit" />
-            </form>
-            <div className="addProduct"></div>
-          </div>
-
-
-
           {/* get recipes button  */}
           <div>
             {recipes &&
