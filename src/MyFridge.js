@@ -276,7 +276,7 @@ function MyFridge() {
             }}
             className="btn recipes"
             variant="contained"
-            color="primary"
+            color="secondary"
           >
             Find Recipes
           </Button>
