@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import "./MyFridge.css";
 import Button from "@material-ui/core/Button";
 import "react-dropdown/style.css";
-import Quagga from "quagga";
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -16,6 +15,9 @@ import Dialog from "@material-ui/core/Dialog";
 import ItemsPage from "./ItemsPage";
 import AddProduct from "./AddProduct";
 import AddItem from "./AddItem";
+import moment from "moment";
+import icon from "./Images/Florence Logo.png";
+
 const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
 const customer_id = process.env.REACT_APP_TEST_USER || window.userId;
 
@@ -101,6 +103,7 @@ function MyFridge() {
       `${api}/fridge/${customer.fridge_id}/items`
     );
     const uniqueProducts = {};
+    const itemsExpiringSoon = 0;
     itemsInFridgeResponse.data.map((item) => {
       if (uniqueProducts[item.product_id]) {
         uniqueProducts[item.product_id].quantity += item.count;
@@ -116,11 +119,40 @@ function MyFridge() {
       }
       return item;
     });
+    let expiringItems = Object.values(uniqueProducts).filter((item) => {
+      let itemExpiry = moment(item.item.expiration);
+      return itemExpiry.diff(moment(), "days") < 3;
+    });
 
     setUniqueItems(Object.values(uniqueProducts));
+    if (expiringItems.length > 0) {
+      let title = "Hey!";
+      let notification = undefined;
+      let iconPath = window.location.origin + icon;
+      console.log(iconPath);
+      let notificationData = {
+        body: `You have ${expiringItems.length} items expiring soon`,
+        image: expiringItems[0].product.image,
+        icon: iconPath,
+      };
+      if (Notification.permission === "granted") {
+        notification = new Notification(title, notificationData);
+      } else {
+        let permission = await Notification.requestPermission();
+
+        if (permission === "granted") {
+          notification = new Notification(title, notificationData);
+        }
+      }
+      notification.onclick = () => {
+        setExpirySoon(true);
+        handleClickOpen();
+      };
+    }
 
     setVisibleUniqueItems(Object.values(uniqueProducts).sort(alphaSort));
   }
+
   useEffect(() => {
     if (!customer || products.length === 0) {
       return;
