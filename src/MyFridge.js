@@ -127,6 +127,7 @@ function MyFridge() {
     <div className="MyFridge">
       <div className="btnParent">
         <Button
+        
           className="btn"
           variant="contained"
           onClick={() => setSelectedCategory(-1)}

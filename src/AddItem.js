@@ -53,6 +53,7 @@ function AddItem(props) {
         </div>
         <div>
           <TextField
+            variant="outlined"
             type="number"
             name="count"
             placeholder="Count"
@@ -60,6 +61,7 @@ function AddItem(props) {
           />
         </div>
         <TextField
+          variant="outlined"
           type="number"
           name="expiration"
           placeholder="Expiration"
