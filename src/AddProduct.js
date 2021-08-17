@@ -68,7 +68,9 @@ function AddProduct(props) {
             </MenuItem>
             {props.categories &&
               props.categories.map((category) => (
-                <MenuItem value={category.id}>{category.name}</MenuItem>
+                <MenuItem value={category.id} key={category.id}>
+                  {category.name}
+                </MenuItem>
               ))}
           </Select>
         </div>

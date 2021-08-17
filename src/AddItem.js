@@ -51,7 +51,9 @@ function AddItem(props) {
             </MenuItem>
             {props.products &&
               props.products.map((product) => (
-                <MenuItem value={product.id}>{product.name}</MenuItem>
+                <MenuItem value={product.id} key={product.id}>
+                  {product.name}
+                </MenuItem>
               ))}
           </Select>
         </div>
