@@ -72,7 +72,6 @@ export default function ItemsPage(props) {
     itemsToShow = itemsToShow.sort((left, right) =>
       moment(left.expiration).diff(moment(right.expiration))
     );
-    console.log(itemsToShow);
 
     setItems(itemsToShow);
   }
@@ -104,7 +103,6 @@ export default function ItemsPage(props) {
       <div className="itemContainer">
         {items.map((item) => {
           let product = products.find((p) => p.id === item.product_id);
-          console.log(product);
           if (!product) {
             return <></>;
           }
