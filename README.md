@@ -37,10 +37,53 @@ Florence Fridge App relies on:
 
 ## Environment Set-up Frontend
 
-## Enviroment Set-up Backend 
-# Setup
+### Scaffold the App
 
-## Goal
+Create a new React app within this project folder. **You must perform this within this front-end project folder**.
+
+```bash
+$ npx create-react-app .
+```
+
+### Add `axios`
+
+Install axios:
+
+```bash
+$ yarn add axios
+```
+
+### Creating a `.env` File
+
+Create a file named `.env`.
+
+The front-end layer needs to send API requests to the back-end layer. In order to handle this, the front-end layer repo **must** include a `.env` file with this line:
+
+```
+REACT_APP_BACKEND_URL=http://localhost:5000
+```
+
+Note that this `REACT_APP_BACKEND_URL` _must_ include `http://`.
+
+Use this environment variable to send your API requests. You can read it by using the expression `process.env.REACT_APP_BACKEND_URL`. For example, we may use it like this in any component:
+
+```js
+axios.get(`${process.env.REACT_APP_BACKEND_URL}/florence-fridge`, {
+    // ...
+```
+
+This will make Heroku deployment easier.
+
+### Commit and Push
+
+Commit and push your files to your repo, especially including the `package.json` file!
+
+</details>
+
+
+## Enviroment Set-up Backend 
+
+### Setup
 
 The goal for setup is to cover all of the set up needed at the beginning of this project, which includes:
 
@@ -51,14 +94,14 @@ The goal for setup is to cover all of the set up needed at the beginning of this
 1. Running `$ flask db init`
 1. Running `$ flask run` and `$ FLASK_ENV=development flask run`
 
-# Requirements
+### Requirements
 
-## Fork and Clone
+### Fork and Clone
 
 1. Fork this project repo to your own personal account
 1. Clone this new forked project
 
-## Managing Dependencies
+### Managing Dependencies
 
 Create a virtual environment:
 
@@ -74,15 +117,13 @@ Install dependencies (we've already gathered them all into a `requirements.txt` 
 (venv) $ pip install -r requirements.txt
 ```
 
-## Setting Up Development and Test Databases
+### Setting Up Development and Test Databases
 
 Create a database:
 
-1. A development database named `video_store_api_development`
-1. [OPTIONAL] A test database named `video_store_api_test`
-    - There are no Pytest tests for this project.  If you choose to write your own using the tests from Task List as a model, we recommend you also use a testing database
+1. A development database named `your_database_name`
 
-## Creating a `.env` File
+### Creating a `.env` File
 
 Create a file named `.env`.
 
@@ -95,7 +136,6 @@ Your `.env` may look like this:
 
 ```
 SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://postgres:postgres@localhost:5432/your_database_name
-
 ```
 
 
