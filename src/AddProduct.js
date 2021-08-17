@@ -31,10 +31,9 @@ function AddProduct(props) {
   };
 
   return (
-    <div>
-    <FormControl >
-      <form onSubmit={onSubmit}>
-        <label className="label2" >Add New Product</label>
+    <FormControl>
+      <form className="form" onSubmit={onSubmit}>
+        <label>Add New Product</label>
         <div>
           <TextField
             variant="outlined"
@@ -69,13 +68,12 @@ function AddProduct(props) {
           </Select>
         </div>
         <div className="space">
-        <Button  type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
         </div>
       </form>
     </FormControl>
-    </div>
   );
 }
 

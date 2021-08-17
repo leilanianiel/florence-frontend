@@ -11,9 +11,9 @@ import "./LogIn.css";
 const api = process.env.REACT_APP_API_ENDPOINT || window.location.origin;
 
 function AddItem(props) {
-  const [newItemCount, setNewItemCount] = useState('');
+  const [newItemCount, setNewItemCount] = useState("");
   const [newItemProductId, setNewItemProductId] = useState(-1);
-  const [newItemExpiration, setNewItemExpiration] = useState('');
+  const [newItemExpiration, setNewItemExpiration] = useState("");
 
   // SUBMIT NEW ITEM
   const itemSubmit = async (evt) => {
@@ -25,62 +25,60 @@ function AddItem(props) {
     };
 
     const expiration = parseInt(newItemExpiration);
-    if (expiration) { 
+    if (expiration) {
       data.expiration = expiration;
     }
     const postNewItem = await axios.post(`${api}/item`, data);
     props.getItems();
 
-    setNewItemExpiration('');
+    setNewItemExpiration("");
     setNewItemProductId(-1);
-    setNewItemCount('');
+    setNewItemCount("");
   };
 
   return (
     <FormControl>
-      <div className="label">
-        <form onSubmit={itemSubmit}>
-          <label>Add New Item</label>
-          <div>
-            <Select
-              value={newItemProductId}
-              onChange={(e) => setNewItemProductId(e.target.value)}
-              displayEmpty
-            >
-              <MenuItem value={-1} disabled>
-                Select Product
-              </MenuItem>
-              {props.products &&
-                props.products.map((product) => (
-                  <MenuItem value={product.id}>{product.name}</MenuItem>
-                ))}
-            </Select>
-          </div>
-          <div>
-            <TextField
-              variant="outlined"
-              type="number"
-              name="count"
-              placeholder="Count"
-              value={newItemCount}
-              onChange={(e) => setNewItemCount(e.target.value)}
-            />
-          </div>
+      <form className="form" onSubmit={itemSubmit}>
+        <label>Add New Item</label>
+        <div>
+          <Select
+            value={newItemProductId}
+            onChange={(e) => setNewItemProductId(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value={-1} disabled>
+              Select Product
+            </MenuItem>
+            {props.products &&
+              props.products.map((product) => (
+                <MenuItem value={product.id}>{product.name}</MenuItem>
+              ))}
+          </Select>
+        </div>
+        <div>
           <TextField
             variant="outlined"
             type="number"
-            name="expiration"
-            placeholder="Expiration"
-            value={newItemExpiration}
-            onChange={(e) => setNewItemExpiration(e.target.value)}
+            name="count"
+            placeholder="Count"
+            value={newItemCount}
+            onChange={(e) => setNewItemCount(e.target.value)}
           />
-          <div className="space">
-            <Button type="submit" variant="contained" color="primary">
-              Submit
-            </Button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <TextField
+          variant="outlined"
+          type="number"
+          name="expiration"
+          placeholder="Expiration"
+          value={newItemExpiration}
+          onChange={(e) => setNewItemExpiration(e.target.value)}
+        />
+        <div className="space">
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
+        </div>
+      </form>
     </FormControl>
   );
 }
