@@ -50,6 +50,7 @@ function MyFridge() {
     setOpen(false);
     setSelectedProduct();
     setExpirySoon(false);
+    getItems();
   };
 
   const alphaSort = (a, b) => a.product.name.localeCompare(b.product.name);
