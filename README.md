@@ -2,9 +2,8 @@
 
 Florence FridgeApp can assist in making our lives easier and more efficient. This app would minimize the amount of food waste in everyday homes. Similar to smart fridges; Florence would keep an inventory of the food that is stored in your fridge. The app would keep baseline expiration dates of foods and also be able to add inventory, sort by food item and more. When food is closest to expiring it would be pushed to the a new category with a notification. With the inventory being stored, Florence would suggest recipes based on categories and keywords. This would be an affordable alternative to a smart fridge and would help everyday users take the stress out of cooking and food waste.
 
-![Florence_home](https://user-images.githubusercontent.com/62310329/129986841-43dcab60-32c0-42d8-8b88-2ae901ee8625.png)
-
-![Florence_Fridge](https://user-images.githubusercontent.com/62310329/129986868-8359c65a-0719-484a-bb67-4b57935dd714.png)
+![Florence_home](https://user-images.githubusercontent.com/62310329/129987198-6b7d91af-ce09-436c-92bf-187234f46666.jpg)
+![Florence_Fridge](https://user-images.githubusercontent.com/62310329/129987201-84046733-8016-4f29-ab47-19cba9758fa3.jpg)
 
 
 ## Feature Set
