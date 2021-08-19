@@ -21,16 +21,22 @@ Florence FridgeApp can assist in making our lives easier and more efficient. Thi
 Florence Fridge App
 This app was created as a Capstone project for Ada Developer Academy. The purpose of the app is to reduce food waste by organizing and planning. 
 
+### Managing Dependencies
 
-## Dependencies
 Florence Fridge App relies on:
-
+```bash
+  - react 
+  - axios
   - Google OAuth
   - Flask
   - Yarn
   - Material-ui
   - SQLAlchemy
   - React
+  - QuaggasJS
+  - reportWebVitals
+  - moment
+  ```
 
 ## Environment Set-up Front-End
 
