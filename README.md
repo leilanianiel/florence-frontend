@@ -11,7 +11,7 @@ Florence FridgeApp can assist in making our lives easier and more efficient. Thi
 
 # Front-End Environment & Set-up
 
-# Feature Set
+### Feature Set
 
 * OAuth secure Login.
 * Create and store food items.
