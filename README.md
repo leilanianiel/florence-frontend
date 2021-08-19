@@ -20,15 +20,6 @@ Florence FridgeApp can assist in making our lives easier and more efficient. Thi
 Florence Fridge App
 This app was created as a Capstone project for Ada Developer Academy. The purpose of the app is to reduce food waste by organizing and planning. 
 
-<img src="/Images/Welcome.png" alt="Welcome" width="250" height="500">.  <img src="/Images/Navigator.png" alt="Navigator" width="250" height="500">.  <img src="/Images/Trash_Report.png" alt="Trash Report" width="250" height="500">
-
-
-
-### 
-Provides a map marked with locations of the nearest trash cans and bathrooms, along with a navigation route to them. All users can help contribute to the map by adding in markers for trash cans and bathrooms. 
-
-### Trash Report
-Provides a map to be marked with reports of trash in the area (i.e. excessive litter, abandoned furniture). Any user can help contribute to the map by making reports of where they notice trash. Reports include the location, description, and image of the trash. Once a report is saved, any user can see the annotation on the map and click on it for more information. 
 
 ## Dependencies
 Florence Fridge App relies on:
