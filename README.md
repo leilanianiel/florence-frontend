@@ -1,5 +1,7 @@
 # Florence Fridge App 
 
+#### This app was created as a Capstone project for Ada Developer Academy. The purpose of the app is to reduce food waste by organizing and planning.
+
 Florence FridgeApp can assist in making our lives easier and more efficient. This app would minimize the amount of food waste in everyday homes. Similar to smart fridges; Florence would keep an inventory of the food that is stored in your fridge. The app would keep baseline expiration dates of foods and also be able to add inventory, sort by food item and more. When food is closest to expiring it would be pushed to the a new category with a notification. With the inventory being stored, Florence would suggest recipes based on categories and keywords. This would be an affordable alternative to a smart fridge and would help everyday users take the stress out of cooking and food waste.
 
 
@@ -7,6 +9,7 @@ Florence FridgeApp can assist in making our lives easier and more efficient. Thi
 ![Florence_Fridge](https://user-images.githubusercontent.com/62310329/129987338-1561807f-b73a-4fe7-9a6e-fe80fc458fbc.png)
 
 
+# Front-End Environment & Set-up
 
 # Feature Set
 
@@ -16,10 +19,7 @@ Florence FridgeApp can assist in making our lives easier and more efficient. Thi
 * Sorted by catergories.
 * Recipe API "Spoonacular"
 * Barcode Scanner "quaggaJS" 
-
-# Florence Front-End
-Florence Fridge App
-This app was created as a Capstone project for Ada Developer Academy. The purpose of the app is to reduce food waste by organizing and planning. 
+ 
 
 ### Managing Dependencies
 
@@ -38,7 +38,6 @@ Florence Fridge App relies on:
   - moment
   ```
 
-## Environment Set-up Front-End
 
 ### Scaffold the App
 
@@ -83,7 +82,7 @@ Commit and push your files to your repo, especially including the `package.json`
 </details>
 
 
-## Enviroment Set-up Backend 
+# Back-End Environment & Set-up
 
 ### Setup
 
