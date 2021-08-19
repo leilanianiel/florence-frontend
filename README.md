@@ -8,7 +8,7 @@ Florence FridgeApp can assist in making our lives easier and more efficient. Thi
 
 
 
-## Feature Set
+# Feature Set
 
 * OAuth secure Login.
 * Create and store food items.
@@ -17,7 +17,7 @@ Florence FridgeApp can assist in making our lives easier and more efficient. Thi
 * Recipe API "Spoonacular"
 * Barcode Scanner "quaggaJS" 
 
-# FlorenceFrontend
+# Florence Front-End
 Florence Fridge App
 This app was created as a Capstone project for Ada Developer Academy. The purpose of the app is to reduce food waste by organizing and planning. 
 
@@ -32,7 +32,7 @@ Florence Fridge App relies on:
   - SQLAlchemy
   - React
 
-## Environment Set-up Frontend
+## Environment Set-up Front-End
 
 ### Scaffold the App
 
@@ -60,8 +60,6 @@ The front-end layer needs to send API requests to the back-end layer. In order t
 REACT_APP_BACKEND_URL=http://localhost:5000
 ```
 
-Note that this `REACT_APP_BACKEND_URL` _must_ include `http://`.
-
 Use this environment variable to send your API requests. You can read it by using the expression `process.env.REACT_APP_BACKEND_URL`. For example, we may use it like this in any component:
 
 ```js
@@ -70,6 +68,7 @@ axios.get(`${process.env.REACT_APP_BACKEND_URL}/florence-fridge`, {
 ```
 
 This will make Heroku deployment easier.
+
 
 ### Commit and Push
 
