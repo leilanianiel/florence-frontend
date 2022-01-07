@@ -28,14 +28,13 @@ Youtube Demo Link: https://www.youtube.com/watch?v=YpAWDAG0Gtk
 
 Florence Fridge App relies on:
 ```bash
-  - react 
+  - React 
   - axios
   - Google OAuth
   - Flask
   - Yarn
   - Material-ui
   - SQLAlchemy
-  - React
   - QuaggasJS
   - reportWebVitals
   - moment
