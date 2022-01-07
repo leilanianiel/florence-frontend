@@ -18,7 +18,7 @@ Youtube Demo Link: https://www.youtube.com/watch?v=YpAWDAG0Gtk
 
 * OAuth secure Login.
 * Create and store food items.
-* Recieve expiration notification.
+* Recieve alert notification when food close to expiration.
 * Sorted by catergories.
 * Recipe API "Spoonacular"
 * Barcode Scanner "quaggaJS" 
